@@ -1,0 +1,159 @@
+<div class="container mx-auto px-4 py-12">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-10 animate-on-scroll">
+      <h1 class="text-3xl font-bold text-indigo-700 mb-2">Hasil NIK Parser</h1>
+      <p class="text-gray-600">Informasi lengkap dari NIK yang Anda masukkan</p>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 animate-on-scroll">
+      <div class="p-6 bg-indigo-600 text-white">
+        <h2 class="text-xl font-bold">Nomor Induk Kependudukan</h2>
+        <p class="text-2xl font-mono tracking-wider"><%= result.nik %></p>
+      </div>
+      
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Jenis Kelamin</h3>
+              <p class="text-lg font-semibold <%= result.kelamin === 'LAKI-LAKI' ? 'text-blue-600' : 'text-pink-600' %>">
+                <%= result.kelamin %>
+              </p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Tanggal Lahir</h3>
+              <p class="text-lg font-semibold"><%= result.lahir %></p>
+              <p class="text-sm text-gray-500"><%= result.lahir_lengkap %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Usia</h3>
+              <p class="text-lg font-semibold"><%= result.tambahan.usia %></p>
+              <p class="text-sm text-gray-500">Kategori: <%= result.tambahan.kategori_usia %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Zodiak</h3>
+              <p class="text-lg font-semibold"><%= result.tambahan.zodiak %></p>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Provinsi</h3>
+              <p class="text-lg font-semibold"><%= result.provinsi.nama %></p>
+              <p class="text-sm text-gray-500">Kode: <%= result.provinsi.kode %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500"><%= result.kotakab.jenis %></h3>
+              <p class="text-lg font-semibold"><%= result.kotakab.nama %></p>
+              <p class="text-sm text-gray-500">Kode: <%= result.kotakab.kode %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Kecamatan</h3>
+              <p class="text-lg font-semibold"><%= result.kecamatan.nama %></p>
+              <p class="text-sm text-gray-500">Kode: <%= result.kecamatan.kode %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Nomor Urut</h3>
+              <p class="text-lg font-semibold"><%= result.nomor_urut %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-md overflow-hidden animate-on-scroll">
+        <div class="p-6 bg-green-600 text-white">
+          <h2 class="text-xl font-bold">Informasi Tambahan</h2>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Hari Lahir</h3>
+              <p class="text-lg font-semibold"><%= result.tambahan.pasaran.split(',')[0] %></p>
+              <p class="text-sm text-gray-500"><%= result.tambahan.pasaran.split(',')[1] %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Ultah Berikutnya</h3>
+              <p class="text-lg font-semibold"><%= result.tambahan.ultah %></p>
+            </div>
+            
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Kode Wilayah</h3>
+              <p class="text-lg font-semibold font-mono"><%= result.kode_wilayah %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-md overflow-hidden animate-on-scroll">
+        <div class="p-6 bg-yellow-600 text-white">
+          <h2 class="text-xl font-bold">Fakta Menarik</h2>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 bg-yellow-100 rounded-full p-2">
+                <i class="fas fa-birthday-cake text-yellow-600"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-gray-500">Tahun Kelahiran</h3>
+                <p class="text-lg font-semibold"><%= result.lahir.split('/')[2] %></p>
+                <p class="text-sm text-gray-500">
+                  Generasi <%= result.lahir.split('/')[2] >= 2010 ? 'Alpha' : 
+                    result.lahir.split('/')[2] >= 1995 ? 'Z' : 
+                    result.lahir.split('/')[2] >= 1980 ? 'Milenial' : 
+                    result.lahir.split('/')[2] >= 1965 ? 'X' : 'Boomer' %>
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 bg-blue-100 rounded-full p-2">
+                <i class="fas fa-map-marked-alt text-blue-600"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-gray-500">Wilayah Administrasi</h3>
+                <p class="text-sm">
+                  <%= result.kecamatan.nama %>, <%= result.kotakab.nama %>, <%= result.provinsi.nama %>
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 bg-purple-100 rounded-full p-2">
+                <i class="fas fa-id-card text-purple-600"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-gray-500">Struktur NIK</h3>
+                <p class="text-xs font-mono">
+                  <span class="text-purple-600"><%= result.nik.substring(0, 2) %></span>
+                  <span class="text-blue-600"><%= result.nik.substring(2, 4) %></span>
+                  <span class="text-green-600"><%= result.nik.substring(4, 6) %></span>
+                  <span class="text-yellow-600"><%= result.nik.substring(6, 12) %></span>
+                  <span class="text-red-600"><%= result.nik.substring(12) %></span>
+                </p>
+                <p class="text-xs text-gray-500 mt-1">
+                  Kode Provinsi • Kode Kab/Kota • Kode Kec • Tgl Lahir • No Urut
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center animate-on-scroll">
+      <a href="/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-all">
+        <i class="fas fa-arrow-left mr-2"></i> Kembali ke Beranda
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <!-- Favicon (Font Awesome Robot) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Animate.css CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+    /* Improved Easter egg modal styles */
+    .easter-egg-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .easter-egg-content {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      background: transparent;
+      border-radius: 12px;
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: all 0.3s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .easter-egg-modal.show .easter-egg-content {
+      transform: scale(1);
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .close-easter-egg {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      transition: transform 0.2s ease;
+      z-index: 10;
+    }
+    .close-easter-egg:hover {
+      transform: rotate(90deg);
+    }
+    /* Pulse animation for Han name */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .han-pulse {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <%- body %>
+  
+  <!-- Footer with credit -->
+  <footer class="mt-auto py-6 bg-white border-t border-gray-200">
+    <div class="container mx-auto px-4 text-center">
+      <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4">
+        <p class="text-gray-600 text-sm">NIK Parser Indonesia</p>
+        <span class="hidden md:block text-gray-400">•</span>
+        <p class="text-gray-600 text-sm">Dikembangkan oleh <span id="han-name" class="font-semibold text-indigo-600 cursor-pointer hover:text-indigo-800 transition-colors han-pulse">Han</span></p>
+        <span class="hidden md:block text-gray-400">•</span>
+        <p class="text-gray-600 text-sm">© <%= new Date().getFullYear() %></p>
+      </div>
+      <div class="mt-3 flex justify-center space-x-4">
+        <a href="https://github.com/zyanmd" class="text-gray-500 hover:text-indigo-600 transition-colors">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.instagram.com/rhanwn_" class="text-gray-500 hover:text-indigo-600 transition-colors">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Easter Egg Modal -->
+  <div id="easterEggModal" class="easter-egg-modal">
+    <span class="close-easter-egg">&times;</span>
+    <div class="easter-egg-content">
+      <div class="video-container">
+        <iframe id="easterEggVideo" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Robots.txt meta tag -->
+  <meta name="robots" content="index, follow">
+
+  <script>
+    // Simple animation for form submission
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          const button = form.querySelector('button[type="submit"]');
+          button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+          button.disabled = true;
+        });
+      }
+      
+      // Animate elements with the 'animate-on-scroll' class when they come into view
+      const animateOnScroll = () => {
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        elements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          const isVisible = (rect.top <= window.innerHeight * 0.8);
+          if (isVisible) {
+            el.classList.add('animate__animated', 'animate__fadeInUp');
+          }
+        });
+      };
+      
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll(); // Run once on page load
+
+      // Easter Egg Functionality
+      const hanName = document.getElementById('han-name');
+      const easterEggModal = document.getElementById('easterEggModal');
+      const easterEggVideo = document.getElementById('easterEggVideo');
+      const closeEasterEgg = document.querySelector('.close-easter-egg');
+
+      hanName.addEventListener('click', () => {
+        // Set the video URL with autoplay parameter
+        easterEggVideo.src = "https://www.youtube.com/embed/xvFZjo5PgG0?autoplay=1&mute=0&si=d1_dxLa_keAiar-e";
+        easterEggModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        
+        // Add show class after a small delay for animation
+        setTimeout(() => {
+          easterEggModal.classList.add('show');
+        }, 10);
+      });
+
+      closeEasterEgg.addEventListener('click', () => {
+        easterEggModal.classList.remove('show');
+        setTimeout(() => {
+          easterEggModal.style.display = 'none';
+          easterEggVideo.src = ""; // Stop the video
+          document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }, 300);
+      });
+
+      // Close modal when clicking outside the content
+      easterEggModal.addEventListener('click', (e) => {
+        if (e.target === easterEggModal) {
+          easterEggModal.classList.remove('show');
+          setTimeout(() => {
+            easterEggModal.style.display = 'none';
+            easterEggVideo.src = "";
+            document.body.style.overflow = 'auto';
+          }, 300);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
